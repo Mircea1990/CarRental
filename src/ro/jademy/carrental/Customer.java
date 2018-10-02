@@ -1,7 +1,16 @@
 package ro.jademy.carrental;
 
-public class Customer {
+public class Customer extends AbstractPerson {
 
-    public String firstName;
-    public String lastName;
+   private int buget;
+
+    public Customer(String firstName, String lastName,int buget) {
+        super(firstName, lastName);
+        this.buget = buget;
+        this.lastName = lastName;
+    }
+
+    public int getBuget(){
+        return getBuget();
+    }
 }

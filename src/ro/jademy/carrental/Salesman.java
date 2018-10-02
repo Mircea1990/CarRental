@@ -1,9 +1,26 @@
 package ro.jademy.carrental;
 
-public class Salesman {
+public class Salesman extends AbstractPerson {
 
-    // Q: how can we avoid duplicate code in the salesman and the customer classes?
+    private String userName;
+    private String pass;
 
-    public String firstName;
-    public String lastName;
+    public Salesman(String firstName, String lastName,
+                    String userName, String pass) {
+        super(firstName, lastName);
+
+        this.userName = userName;
+        this.pass = pass;
+    }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+
 }
