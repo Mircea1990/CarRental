@@ -1,7 +1,12 @@
 package ro.jademy.carrental.car.car_factory;
+
 import ro.jademy.carrental.car.car_properties.*;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public abstract class Car {
+    private String model;
     private CarBodyType bodyType;
     private CarEngine engineDisplasment;
     private CarFuelType fuelType;
@@ -10,16 +15,18 @@ public abstract class Car {
     private CarColor carColor;
     private CarValue carValue;
     private boolean availableCar;
+    private CarState carState = new CarState();
 
     public Car() {
         this.availableCar = false;
     }
 
 
-    public Car(CarBodyType bodyType, CarEngine engineDisplasment,
+    public Car(String model, CarBodyType bodyType, CarEngine engineDisplasment,
                CarFuelType fuelType, CarGearbox gearBox,
                CarTransmision carTransmision, CarColor carColor,
                CarValue carValue, boolean availableCar) {
+        this.model = model;
         this.bodyType = bodyType;
         this.engineDisplasment = engineDisplasment;
         this.fuelType = fuelType;
@@ -28,7 +35,10 @@ public abstract class Car {
         this.carColor = carColor;
         this.carValue = carValue;
         this.availableCar = availableCar;
+    }
 
+    public String getModel() {
+        return model;
     }
 
     public CarBodyType getBodyType() {
@@ -63,26 +73,25 @@ public abstract class Car {
         return availableCar;
     }
 
-    @Override
-    public String toString() {
-        return "Car specifications: " +
-                "bodyType=" + bodyType +
-                ", engineDisplasment=" + engineDisplasment +
-                ", fuelType=" + fuelType +
-                ", gearBox=" + gearBox +
-                ", carTransmision=" + carTransmision +
-                ", carColor=" + carColor +
-                ", carValue=" + carValue +
-                ", availableCar=" + availableCar +
-                '}';
+    public CarState getCarState() {
+        return carState;
     }
 
-    public void showCars(){
-        System.out.println("All cars in store: ");
-        String show = String.format("%-12%s-12%s-12%s-12%s-12%s-12%s-12%s-12%s," +
-                bodyType,engineDisplasment,fuelType,gearBox,carTransmision,carColor,
-        carValue,availableCar);
-        System.out.println(show);
+    public void print() {
+        System.out.format("%5s %15s %13s %16s %16s %16s %16s %16s %16s",
+                getModel(), getBodyType().getBodyType(),
+                getCarColor().getCarColor(),
+                getCarTransmision().getCarTransmision(),
+                getEngineDisplasment().getEngineDisplasment(),
+                getFuelType().getGasoline(),
+                getGearBox().getGearBox(), getCarValue().getCarValue(),
+                isAvailableCar(), getCarState().isRented() ? "Is rented" : "Available");
+    }
+
+    public void rentCar(Date start, Date end) {
+        carState.setRented(true);
+        carState.setStarDate(start);
+        carState.setEndDate(end);
     }
 }
 

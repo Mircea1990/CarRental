@@ -1,8 +1,8 @@
 package ro.jademy.carrental.car.car_properties;
 
 public enum CarGearbox {
-    MANUAL("ManualGearbox"),
-    AUTOMATIC("AutomaticGearbox");
+    MANUAL("Manual Gearbox"),
+    AUTOMATIC("Automatic Gearbox");
 
     private String gearBox;
 
@@ -10,5 +10,8 @@ public enum CarGearbox {
         this.gearBox = gearBox;
     }
 
-
+    public String getGearBox() {
+        return gearBox;
+    }
 }
+

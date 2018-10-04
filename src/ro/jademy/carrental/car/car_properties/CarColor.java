@@ -1,7 +1,7 @@
 package ro.jademy.carrental.car.car_properties;
 
 public enum  CarColor {
-    RED("red"), GREEN("green"), BLUE("blue"), BLACK("black");
+    RED("Red"), GREEN("Green"), BLUE("Blue"), BLACK("Black");
 
     private String carColor;
 

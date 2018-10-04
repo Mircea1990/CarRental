@@ -1,22 +1,24 @@
 package ro.jademy.carrental;
 
-import ro.jademy.carrental.car.car_factory.*;
+import ro.jademy.carrental.car.car_factory.Car;
+import ro.jademy.carrental.car.car_factory.CarState;
+import ro.jademy.carrental.car.car_factory.Renault;
+import ro.jademy.carrental.car.car_factory.Suzuki;
+import ro.jademy.carrental.car.car_properties.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Shop {
-
-    public Shop() {
-        salesmenList();
-    }
-
-
+    Scanner scan = new Scanner(System.in);
+    private List<Car> carList = new ArrayList<>();
     private List<Salesman> salesmenList = new ArrayList<>();
 
-    public void salesmenList() {
+    public Shop() {
+        initSalesmenList();
+        initCarList();
+    }
+
+    public void initSalesmenList() {
 
         Salesman salesman1 = new Salesman("John", "Brandon",
                 "user001", "pass1");
@@ -25,11 +27,28 @@ public class Shop {
         Salesman salesman3 = new Salesman("Apollo", "Creed",
                 "user003", "pass3");
         Collections.addAll(salesmenList, salesman1, salesman2, salesman3);
+    }
 
+    private void initCarList() {
+
+        carList.add(new Renault("Renault Clio",
+                CarBodyType.SUV, CarEngine.ONE_POINT_FOUR, CarFuelType.DIESEL, CarGearbox.MANUAL, CarTransmision.FRONT, CarColor.BLUE, CarValue.VAL2, true));
+        carList.add(new Renault("Renault Megane",
+                CarBodyType.SEDAN, CarEngine.TWO_LITRES, CarFuelType.GASOLINE, CarGearbox.AUTOMATIC, CarTransmision.ALLWHEEL, CarColor.GREEN, CarValue.VAL1, false));
+        carList.add(new Renault("Renault Kadjar",
+                CarBodyType.SUV, CarEngine.TWO_LITRES, CarFuelType.GASOLINE, CarGearbox.MANUAL, CarTransmision.ALLWHEEL, CarColor.BLACK, CarValue.VAL3, true));
+        carList.add(new Suzuki("Suzuki SX4",
+                CarBodyType.SUV, CarEngine.ONE_POINT_FOUR, CarFuelType.GASOLINE, CarGearbox.MANUAL, CarTransmision.ALLWHEEL, CarColor.GREEN, CarValue.VAL1, false) {
+        });
+        carList.add(new Suzuki("Suzuki Vitara",
+                CarBodyType.SUV, CarEngine.TWO_LITRES, CarFuelType.DIESEL, CarGearbox.AUTOMATIC, CarTransmision.ALLWHEEL, CarColor.BLUE, CarValue.VAL2, true) {
+        });
+        carList.add(new Suzuki("Suzuki Swift",
+                CarBodyType.SEDAN, CarEngine.ONE_POINT_FOUR, CarFuelType.GASOLINE, CarGearbox.AUTOMATIC, CarTransmision.FRONT, CarColor.RED, CarValue.VAL3, false) {
+        });
     }
 
     public boolean login(String username, String password) {
-
         for (Salesman s : salesmenList) {
             if (s.getUserName().equals(username) &&
                     s.getPass().equals(password)) {
@@ -49,8 +68,12 @@ public class Shop {
     }
 
     public void showMainMenu() {
-        System.out.println(" -----------------------------------------------");
+        System.out.println();
+        System.out.println();
+        System.out.println("----------Please choose an option---------------");
+        System.out.println();
         System.out.println("                    MAIN MENU                   ");
+        System.out.println();
         System.out.println("1. List all cars--------------------------------");
         System.out.println("2. List available cars--------------------------");
         System.out.println("3. List rented cars-----------------------------");
@@ -58,23 +81,28 @@ public class Shop {
         System.out.println("5. Logout---------------------------------------");
         System.out.println("6. Exit-----------------------------------------");
         System.out.println("------------------------------------------------");
+        mainMenuChoise();
     }
 
     public void mainMenuChoise() {
-        Scanner scan = new Scanner(System.in);
-        int choose = scan.nextInt();
-        switch (choose) {
+
+        int choice = scan.nextInt();
+        switch (choice) {
             case 1:
                 showAllCars();
+                backToMenu();
                 break;
             case 2:
                 listAvailableCars();
+                backToMenu();
                 break;
             case 3:
                 listRentedCars();
+                backToMenu();
                 break;
             case 4:
                 checkIncome();
+                backToMenu();
             case 5:
                 logOut();
             case 6:
@@ -82,32 +110,78 @@ public class Shop {
         }
     }
 
+    public void backToMenu() {
+        System.out.println("");
+        System.out.println("0:Back to menu");
+        int choise = scan.nextInt();
+        if (choise == 0) {
+            showMainMenu();
+        }
+    }
+
     public void showAllCars() {
-        List<Car> carList = new ArrayList<>();
+        header();
         for (Car car : carList) {
-            car.showCars();
+            car.print();
+            System.out.println();
+        }
+    }
+
+    private void header() {
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%12s %18s %13s %16s %16s %16s %16s %16s %16s", "MODEL", "CAR BODY TYPE", "COLOR", "TRANSMISSION", "ENGINE TYPE", "FUEL TYPE", "GEARBOX TYPE", "CAR PRICE/HOUR", "AVAILABILITY");
+        System.out.println();
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public void listAvailableCars() {
+        System.out.println("---------------Available cars-------------------");
+        header();
+        for (Car car : carList) {
+            if (car.isAvailableCar()) {
+                car.print();
+                System.out.println();
+            }
+        }
+    }
+
+    public void listRentedCars() {
+        System.out.println("---------------Rented cars-------------------");
+        header();
+        for (Car car : carList) {
+            if (!car.isAvailableCar()) {
+                car.print();
+                System.out.println();
+            }
+        }
+    }
+
+    public void checkTimeRent() {
+        for (Car car : carList) {
+            if (!car.isAvailableCar()) {
+
+            }
         }
 
     }
 
-    public void listAvailableCars(){
-
+    public void checkIncome() {
+        System.out.println("---------------Income money/hour-------------------");
     }
 
-    public void listRentedCars(){
-
+    public void logOut() {
+        System.out.println("You are logged out !");
+        System.out.println("Do you whant to logged again?");
+        System.out.println("If yes, press y");
+        String s = scan.next();
+        if (s.equals("y") || s.equals("Y")) {
+            System.out.println("You can loggin again");
+            run();
+        }
     }
 
-    public void checkIncome(){
-
-    }
-
-    public void logOut(){
-
-    }
-
-    public void exitProgram(){
-
+    public void exitProgram() {
+        System.exit(0);
     }
 
     public void showListMenuOptions() {

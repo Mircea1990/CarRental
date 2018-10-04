@@ -12,6 +12,7 @@ public class Main {
 
             Shop shop = new Shop();
             shop.run();
+
     }
     //    Car car1 = new Car("Ferrari", String "F50", )
 

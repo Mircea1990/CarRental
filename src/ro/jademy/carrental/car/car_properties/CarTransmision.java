@@ -1,9 +1,9 @@
 package ro.jademy.carrental.car.car_properties;
 
 public enum  CarTransmision {
-    FRONT("FrontTransmision") ,
-    BACK("BackTransmision"),
-    ALLWHEEL("AllWheelTransmision");
+    FRONT("Front Transmision") ,
+    BACK("Back Transmision"),
+    ALLWHEEL("All Wheel Transmision");
 
     private String carTransmision;
     CarTransmision(String carTransmision){
